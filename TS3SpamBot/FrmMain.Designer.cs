@@ -41,6 +41,8 @@
             this.lblSpeed = new System.Windows.Forms.Label();
             this.numSpeed = new System.Windows.Forms.NumericUpDown();
             this.pnlControl = new System.Windows.Forms.Panel();
+            this.chkBoxSpamNewClients = new System.Windows.Forms.CheckBox();
+            this.timerPokeSpamNewClients = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numSpeed)).BeginInit();
             this.pnlControl.SuspendLayout();
             this.SuspendLayout();
@@ -160,6 +162,7 @@
             // 
             // pnlControl
             // 
+            this.pnlControl.Controls.Add(this.chkBoxSpamNewClients);
             this.pnlControl.Controls.Add(this.lblClient);
             this.pnlControl.Controls.Add(this.numSpeed);
             this.pnlControl.Controls.Add(this.btnTextSpam);
@@ -173,6 +176,22 @@
             this.pnlControl.Name = "pnlControl";
             this.pnlControl.Size = new System.Drawing.Size(396, 79);
             this.pnlControl.TabIndex = 9;
+            // 
+            // chkBoxSpamNewClients
+            // 
+            this.chkBoxSpamNewClients.AutoSize = true;
+            this.chkBoxSpamNewClients.Location = new System.Drawing.Point(113, 49);
+            this.chkBoxSpamNewClients.Name = "chkBoxSpamNewClients";
+            this.chkBoxSpamNewClients.Size = new System.Drawing.Size(109, 17);
+            this.chkBoxSpamNewClients.TabIndex = 9;
+            this.chkBoxSpamNewClients.Text = "Spam new clients";
+            this.chkBoxSpamNewClients.UseVisualStyleBackColor = true;
+            this.chkBoxSpamNewClients.CheckedChanged += new System.EventHandler(this.chkBoxSpamNewClients_CheckedChanged);
+            // 
+            // timerPokeSpamNewClients
+            // 
+            this.timerPokeSpamNewClients.Interval = 10;
+            this.timerPokeSpamNewClients.Tick += new System.EventHandler(this.timerPokeSpamNewClients_Tick);
             // 
             // FrmMain
             // 
@@ -205,6 +224,8 @@
         private System.Windows.Forms.Label lblSpeed;
         private System.Windows.Forms.NumericUpDown numSpeed;
         private System.Windows.Forms.Panel pnlControl;
+        private System.Windows.Forms.CheckBox chkBoxSpamNewClients;
+        private System.Windows.Forms.Timer timerPokeSpamNewClients;
     }
 }
 

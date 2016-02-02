@@ -54,5 +54,52 @@ namespace TS3SpamBot
         {
             ts3Client.ClientPoke(((Client)comboBoxUser.SelectedItem).ClId, txtBoxSpam.Text, true);
         }
+
+        private void chkBoxSpamNewClients_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkBoxSpamNewClients.Checked)
+            {
+                ts3Client.Notifier.OnClientEnterView += Notifier_OnClientEnterView;
+                ts3Client.ClientNotifyRegister(ts3Client.CurrentHandlerId, Notifications.notifycliententerview);
+            }
+            else
+            {
+                ts3Client.Notifier.OnClientEnterView -= Notifier_OnClientEnterView;
+                ts3Client.ClientNotifyUnregister(ts3Client.CurrentHandlerId, Notifications.notifycliententerview);
+                timerPokeSpamNewClients.Stop();
+                spamNewClientCount = 0;
+                spamNewClient = 0;
+            }
+        }
+
+        private int spamNewClient = 0;
+        private int spamNewClientCount = 0;
+        private void Notifier_OnClientEnterView(ClientEnterView clientEnterView)
+        {
+            this.Invoke((MethodInvoker)delegate {
+                if (chkBoxSpamNewClients.Checked)
+                {
+                    spamNewClient = clientEnterView.Client.ClId;
+                    if (timerPokeSpamNewClients.Enabled)
+                        spamNewClientCount = 0;
+                    else
+                        timerPokeSpamNewClients.Start();
+                }
+            });
+        }
+
+        private void timerPokeSpamNewClients_Tick(object sender, EventArgs e)
+        {
+            if(spamNewClientCount >= 150)
+            {
+                spamNewClientCount = 0;
+                spamNewClient = 0;
+                timerPokeSpamNewClients.Stop();
+                return;
+            }
+            if (spamNewClientCount >= 50)
+                ts3Client.ClientPoke(spamNewClient, txtBoxSpam.Text, true);
+            spamNewClientCount++;
+        }
     }
 }
